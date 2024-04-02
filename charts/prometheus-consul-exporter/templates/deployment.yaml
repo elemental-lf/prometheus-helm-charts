@@ -24,6 +24,10 @@ spec:
       {{- end }}
     spec:
       serviceAccountName: {{ template "prometheus-consul-exporter.serviceAccountName" . }}
+{{- if .Values.global.imagePullSecrets }}
+      imagePullSecrets:
+{{ include "prometheus-consul-exporter.imagePullSecrets" . | trim | indent 8 }}
+{{- end }}
       {{- with .Values.initContainers }}
       initContainers: {{ toYaml . | nindent 8 }}
       {{- end }}
